@@ -1,0 +1,72 @@
+#include <iostream>
+#include<vector>
+#include<queue>
+#include<climits>
+using namespace std;
+
+/*
+Do you know what is happening here, we have found the topological sorting algorith of mr Khan
+wich is like based on indegree. Indegree are what these are units through whcih depencency are tracker.
+Also keep in mind the edges can be given in terms of matrxi also
+ dont panic, the matrix index represents the graph and we can do this
+by calling add vertex such that the the first is the index of the list and the others are thelement
+of that list.
+
+Here we caclulate indegree using the advertex fucntion, how we do it we do it by 
+cacluclating incrementing for every vertex which comes. This happens for a directed graph only.
+*/
+
+void addVertex(int i, int j, vector<vector<int>>& adList, vector<int>& inDegree)
+{
+    adList[i].push_back(j);
+    inDegree[j]++;
+}
+
+void topologicalSort(vector<vector<int>>& adList, vector<int>& inDegree)
+{
+    queue<int> Q;
+    // first add all edges for which the indegree is 0
+    for (int i = 0; i < inDegree.size(); i++) {
+        if (inDegree[i] == 0) {
+            Q.push(i);
+            inDegree[i] = INT_MAX;
+        }
+    }
+
+    while(!Q.empty()){
+        int temp = Q.front();
+        cout << " Topological sort "  << temp << endl;
+        Q.pop();
+        for (auto u: adList[temp]) {
+            inDegree[u]--;
+            if (inDegree[u] == 0) {
+                Q.push(u);
+                inDegree[u] = INT_MAX;
+            }
+        }
+    }
+}
+
+int main()
+{
+    // directed graph
+    vector<vector<int>> adList(5, vector<int>(0));
+    vector<int> inDegree(5,0);
+    int matrix[5][5] = {{ 0, 0, 1, 1, 0 },
+                        { 0, 0, 0, 1, 1 },
+                        { 0, 0, 0, 1, 0 },
+                        { 0, 0, 0, 0, 0 },
+                        { 0, 0, 0, 0, 0 }};
+                        
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            if (matrix[i][j]) {
+                addVertex( i, j, adList, inDegree);
+            }
+        }
+    }
+    
+    topologicalSort(adList, inDegree);
+
+    return 0;
+}
