@@ -14,6 +14,10 @@ of that list.
 
 Here we caclulate indegree using the advertex fucntion, how we do it we do it by 
 cacluclating incrementing for every vertex which comes. This happens for a directed graph only.
+
+so the algoithm starts by working on all tge 0 indegreess add them to the lista nd then again puts it intomnthe Q.
+Post that it pop sthem and satrts to prpocess the as soon as it takes it out its reduced the indegrees of each of teh vertex by 1.
+post that it again checks if there are any indegress which are 0 , if yes then again put it in Q and process forward
 */
 
 void addVertex(int i, int j, vector<vector<int>>& adList, vector<int>& inDegree)
